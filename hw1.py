@@ -9,7 +9,7 @@ import csv
 #=======================================
 # Read cwb weather data
 total = 0
-cwb_filename = '106061213.csv'
+cwb_filename = 'sample_input.csv'
 data = []
 header = []
 with open(cwb_filename) as csvfile:
@@ -18,15 +18,15 @@ with open(cwb_filename) as csvfile:
    for row in mycsv:
       total = total+1
       data.append(row)
-#print(total)
+#total = number of data
 
 
 #=======================================
-#print(data[i]["station_id"])
 # Part. 3
 #=======================================
 # Analyze data depend on your group and store it to target_data like:
-remove = []
+''' when we pop out the data, all the data will move
+ toward one space, so the index become (i-j) '''
 j = 0
 for i in range(total):
     if data[i-j]["PRES"]=='-99.000' or data[i-j]["PRES"]=='-999.000' :
@@ -35,15 +35,8 @@ for i in range(total):
         total = total-1
     else:
         i=i
-#print(total)
-#print(data)
 
-#print(type(data))
-#print(remove)
-#for j in remove:
- #   data.pop(j)
-#print(data)
-
+#initialize the sum of pressure & total number
 C0A880_PRES = 0
 C0F9A0_PRES = 0
 C0G640_PRES = 0
@@ -55,7 +48,7 @@ C0G640_count = 0
 C0R190_count = 0
 C0X260_count = 0
 
-
+# just add it up
 for i in range(total):
     if data[i]["station_id"] == 'C0A880':
         C0A880_PRES = C0A880_PRES+float(data[i]["PRES"])
@@ -75,7 +68,7 @@ for i in range(total):
     else:
         i=i
         
-#print(C0X260_count)
+# if C0XXXX = 0 , it means all the data had been deleted
 if C0A880_PRES==0:
     C0A880_mean = 'None'
 else:
@@ -101,17 +94,14 @@ if C0X260_PRES==0:
 else:
     C0X260_mean = C0X260_PRES/C0X260_count
 
-#print(C0F9A0_mean)
-
-
-#a = []
-#b = []
-#b.append(a)
-#b
+#=======================================
+# Part. 4
+#=======================================
+# Print result
 C0A880 = []
 C0A880.append('C0A880')
 C0A880.append(C0A880_mean)
-#C0A880
+
 C0F9A0 = []
 C0F9A0.append('C0F9A0')
 C0F9A0.append(C0F9A0_mean)
@@ -128,6 +118,7 @@ C0X260 = []
 C0X260.append('C0X260')
 C0X260.append(C0X260_mean)
 
+# Generate the desired output
 Ans = []
 Ans.append(C0A880)
 Ans.append(C0F9A0)
@@ -135,20 +126,4 @@ Ans.append(C0G640)
 Ans.append(C0R190)
 Ans.append(C0X260)
 print(Ans)
-
-
-
-        
-# Retrive all data points which station id is "C0X260" as a list.
-# target_data = list(filter(lambda item: item['station_id'] == 'C0X260', data))
-
-# Retrive ten data points from the beginning.
-#target_data = data[:10]
-
-#=======================================
-
-# Part. 4
-#=======================================
-# Print result
-#print(data[i]["PRES"])
 #========================================
